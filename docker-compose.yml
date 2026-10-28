@@ -1,0 +1,31 @@
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DB_PATH: /data/mqttdash.db
+      MQTT_HOST: mosquitto
+      MQTT_PORT: "1883"
+    volumes:
+      - dash-data:/data
+    depends_on:
+      - mosquitto
+
+  # 演示用：造 3 台设备的数据。不需要时可注释掉。
+  sim:
+    build: .
+    command: ["python", "-m", "mqttdash.sim", "--mqtt-host", "mosquitto", "--devices", "3", "--rate", "2", "--duration", "600"]
+    depends_on:
+      - mosquitto
+      - app
+
+volumes:
+  dash-data:
