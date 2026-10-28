@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mqtt-dashboard · 设备遥测看板</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="brand">
+    <span class="dot" id="live-dot"></span>
+    <h1>mqtt-dashboard</h1>
+    <span class="sub">设备遥测 · 阈值告警</span>
+  </div>
+  <div class="stats" id="stats">
+    <span><b id="s-devices">–</b> 台设备</span>
+    <span><b id="s-samples">–</b> 条样本</span>
+    <span><b id="s-rate">–</b> 条/分钟</span>
+    <span class="alert-badge" id="s-active">– 活跃告警</span>
+  </div>
+</header>
+
+<main>
+  <section class="panel" id="devices-panel">
+    <h2>设备</h2>
+    <div class="devices" id="devices"></div>
+  </section>
+
+  <section class="panel">
+    <h2>告警</h2>
+    <table class="alerts">
+      <thead>
+        <tr><th>时间</th><th>设备</th><th>规则</th><th>当前值</th><th>阈值</th><th>状态</th></tr>
+      </thead>
+      <tbody id="alerts"></tbody>
+    </table>
+    <p class="hint" id="alerts-hint">暂无告警</p>
+  </section>
+
+  <section class="panel">
+    <h2>规则</h2>
+    <ul class="rules" id="rules"></ul>
+  </section>
+</main>
+
+<footer>
+  <span id="foot-mqtt">MQTT：未启用</span>
+  <span>·</span>
+  <span>每 2 秒刷新</span>
+  <span>·</span>
+  <a href="/api/docs">API 文档</a>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
